@@ -1,0 +1,48 @@
+package captainPolicy
+manager Clark McGrew <clark.mcgrew@sunysb.edu>
+
+# Define the strategies.  This will override any project specific strategy
+# definitions. 
+build_strategy without_installarea
+setup_strategy root config
+structure_strategy without_version_directory
+
+# The default policy used to compile nd280 code.  This overrides the CMT
+#  default policy
+macro cppflags        "" \
+      Linux           "-g -pipe -O -Wall -ansi -Wctor-dtor-privacy -Wnon-virtual-dtor -fpic -Woverloaded-virtual " \
+      Darwin	      "-g -pipe -W -Wall -fsigned-char -fno-common -flat_namespace"
+
+macro cpp             "g++" \
+      Linux           "g++" \
+      Darwin	      "g++"
+
+macro cpplinkflags    "" \		
+      Darwin          " -bind_at_load"
+
+#############################################################
+# Set up a make fragment to build the $(package)_version.hxx file.
+# This gets included into a package requirements file with:
+#
+#  document version version *.cxx ../dict/*.cxx
+#
+# The include file will define macros for the package version, as well as
+# ones to check if the version comes before a fixed version.  For example
+# the captainPolicy definition macro names will be
+#
+#  captainPolicy_MAJOR_VERSION
+#  captainPolicy_MINOR_VERSION
+#  captainPolicy_PATCH_VERSION
+#  BEFORE_captainPolicy(v,r,p)
+#  EQUALS_captainPolicy(v,r,p)
+make_fragment version -header=version_header -trailer=version_trailer
+
+# Fragment to build the doxygen documentation.  This gets included into a
+# package requirements file with:
+#
+#  document doxygen doxygen -group=documentation *.cxx *.hxx ../doc/*.dox
+#
+make_fragment doxygen -header=doxygen_header
+
+# Make sure that a version include file gets built.
+document version version ../cmt/requirements ../cmt/version.cmt
