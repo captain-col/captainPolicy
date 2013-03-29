@@ -21,6 +21,23 @@ macro cpplinkflags    "" \
       Darwin          " -bind_at_load"
 
 #############################################################
+# Define a new keyword to add a dependency to a target.  When you run make,
+# CMT tries to be as parallel as possible, and so all of the targets get
+# built "at once".  This means that if you build a library and an
+# application in the same package, and the application uses the library (it
+# almost always does), you need to specify the dependency relationship.
+#
+# If the requirements file looked like
+#
+# library myLib a.cxx bunch.cxx of.cxx files.cxx
+#
+# application myApp myApp.cxx
+# dependency target=myApp depends=myLib
+#
+# Then myLib will be built before myApp
+pattern dependency macro_append <target>compile_dependencies " <depends> "
+
+#############################################################
 # Set up a make fragment to build the $(package)_version.hxx file.
 # This gets included into a package requirements file with:
 #
