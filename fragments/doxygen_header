@@ -8,7 +8,7 @@ ${CONSTITUENT}stamp = $(bin)${CONSTITUENT}.stamp
 ${CONSTITUENT} :: $(PACKAGE_ROOT)/dox/index.html
 	@echo "------> Updated Documentation " 
 
-$(PACKAGE_ROOT)/dox/index.html :: $(${CONSTITUENT}stamp) $(shell $(CAPTAINPOLICYROOT)/src/find-tagfiles $(package) $(version) | sed s/=.*//)
+$(PACKAGE_ROOT)/dox/index.html :: $(${CONSTITUENT}stamp) $(shell $(CAPTAINPOLICYROOT)/src/find-tagfiles.py $(package) $(version) | sed s/=.*//)
 	cat  $(CAPTAINPOLICYROOT)/doc/footer.html.frag1 \
 	| sed -e 's/PACKAGE/$(package)/g' -e 's/VERSION/$(version)/g' \
 	> ../doc/footer.html;
@@ -23,7 +23,7 @@ $(PACKAGE_ROOT)/dox/index.html :: $(${CONSTITUENT}stamp) $(shell $(CAPTAINPOLICY
 		FRAGMENT_TAGS="$(shell $(CAPTAINPOLICYROOT)/src/find-tagfiles.py $(package) $(version))" \
 		doxygen - ; \
 	else \
-	    cat  $(CAPTAINPOLICYROOT)/scripts/Doxyfile *.Doxyfile | \
+	    cat  $(CAPTAINPOLICYROOT)/src/Doxyfile *.Doxyfile | \
 	    env FRAGMENT_PROJECT=$(package) \
 		FRAGMENT_VERSION=$(version) \
 		FRAGMENT_OUTPUT=../dox \
