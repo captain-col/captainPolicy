@@ -20,9 +20,13 @@ def CommandOutput(command, forcerun=False):
 
 def CMTPackage():
     """Return the current package name."""
-    output = CommandOutput("cmt show macro package")
-    match = re.search(r"(?m)^package='([\w]*)'$",output)
-    return match.group(1)
+    output = CommandOutput("cmt show macro_value package")
+    return output
+    
+def CMTPackageRoot():
+    """Return the current package name."""
+    output = CommandOutput("cmt show macro_value PACKAGE_ROOT")
+    return output
     
 parser = optparse.OptionParser()
 parser.add_option("-d","--dry-run", dest="DryRun",
@@ -37,6 +41,9 @@ parser.add_option("--no-trace",action="store_false",
 
 (options, args) = parser.parse_args()
 
+# Get the package root.
+packageRoot = CMTPackageRoot()
+
 # Generate and run the CMT command to find all of the doxygen tag
 # files.  The output with the files is tagged with "%%%%%".
 
@@ -45,15 +52,15 @@ cmd += "if [ -x ../dox -a -d ../../<version> ];"
 cmd += "then "
 cmd += "echo %%%%% <package> <version> with version directory;"
 cmd += "echo %%%%% "
-cmd += "../../../<package>/<version>/dox/<package>_<version>.tag"
+cmd += "`cmt show macro_value PACKAGE_ROOT`/dox/<package>_<version>.tag"
 cmd += "="
-cmd += "../../../<package>/<version>/dox;"
+cmd += "`cmt show macro_value PACKAGE_ROOT`/dox;"
 cmd += "elif [ -x ../dox ];"
 cmd += "then "
 cmd += "echo %%%%% "
-cmd += "../../../<package>/dox/<package>_<version>.tag"
+cmd += "`cmt show macro_value PACKAGE_ROOT`/dox/<package>_<version>.tag"
 cmd += "="
-cmd += "../../../<package>/dox;"
+cmd += "`cmt show macro_value PACKAGE_ROOT`/dox;"
 cmd += "fi"
 cmd += ")'"
 
