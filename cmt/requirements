@@ -63,3 +63,4 @@ make_fragment doxygen -header=doxygen_header
 
 # Make sure that a version include file gets built.
 document version version ../cmt/requirements ../cmt/version.cmt
+document doxygen doxygen -group=documentation ../doc/*.dox

@@ -1,0 +1,8 @@
+/*! \mainpage The captainPolicy Package
+  
+  \section captainPolicy
+
+  This defines the basic compilation options, cmt fragments and other very
+  low level policies.
+
+*/
