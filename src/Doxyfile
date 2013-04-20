@@ -167,7 +167,10 @@ QT_AUTOBRIEF           = YES
 # The new default is to treat a multi-line C++ comment block as a detailed
 # description. Set this tag to YES if you prefer the old behaviour instead.
 
-MULTILINE_CPP_IS_BRIEF = YES
+# Because of a presentation bug in 1.7.1, this needs to stay NO until the
+# DOXYGEN on NNGROUP (which hosts the main web pages) is upgraded to 1.8.1
+
+MULTILINE_CPP_IS_BRIEF = NO
 
 # If the INHERIT_DOCS tag is set to YES (the default) then an undocumented
 # member inherits the documentation from any documented member that it
