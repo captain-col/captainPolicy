@@ -1,2 +1,14 @@
 /*! \page captainPolicyHistory History for the captainPolicy Package 
+
+\section captainPolicy_v0r0p0_history Version 0.0.0
+
+Freeze information:
+   - Freeze Date: Tue Nov  5 14:03:03 2013
+   - Freeze User: mcgrew
+   - Freeze Host: boxer.physics.sunysb.edu boxer.local 
+
+
+The first version of captain policy.  This defines the default compilation
+options for the CAPTAIN software.
+
 */
