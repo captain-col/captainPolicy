@@ -11,4 +11,18 @@ Freeze information:
 The first version of captain policy.  This defines the default compilation
 options for the CAPTAIN software.
 
+
+\section captainPolicy_v1r0p0_history Version 1.0.0
+
+Freeze information:
+   - Freeze Date: Fri May 16 13:56:06 2014
+   - Freeze User: mcgrew
+   - Freeze Host: boxer.physics.sunysb.edu boxer.local 
+
+
+First frozen version:
+
+This is the first set of policy for captain.  It's been tested on several
+versions of linux with different gcc releases.  It does not work on mac.
+
 */
