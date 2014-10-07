@@ -10,7 +10,7 @@ structure_strategy without_version_directory
 # The default policy used to compile nd280 code.  This overrides the CMT
 #  default policy
 macro cppflags        "" \
-      Linux           "-g -pipe -O -Wall -std=c++98 -Wctor-dtor-privacy -Wnon-virtual-dtor -fpic -Woverloaded-virtual " \
+      Linux           "-g -pipe -O -Wall -std=c++0x -Wctor-dtor-privacy -Wnon-virtual-dtor -fpic -Woverloaded-virtual " \
       Darwin	      "-g -pipe -W -Wall -fsigned-char -fno-common -flat_namespace"
 
 macro cpp             "g++" \
