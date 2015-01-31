@@ -25,4 +25,23 @@ First frozen version:
 This is the first set of policy for captain.  It's been tested on several
 versions of linux with different gcc releases.  It does not work on mac.
 
+
+\section captainPolicy_v1r1p0_history Version 1.1.0
+
+Freeze information:
+   - Freeze Date: Sat Jan 31 17:30:24 2015
+   - Freeze User: mcgrew
+   - Freeze Host: 
+
+
+FEATURE CHANGE
+
+* Change the g++ standard from 98 to 0x.  This uses the definition c++0x
+since older compilers don't know c++11 (gcc treats them as essentially
+equivalent).
+
+* Change the way doxygen lays out the class documentation.  This defines
+the layout so that the detailed (and brief) description comes before the
+reset of the class documentation.
+
 */
