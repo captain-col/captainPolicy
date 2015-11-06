@@ -67,3 +67,7 @@ document doxygen doxygen -group=documentation ../doc/*.dox
 
 set CAPTAINPOLICYMIRROR $(captainPolicy_root)/MIRROR
 
+# Define a setup script to check for calibration tables and download them
+# if required. 
+setup_script mirror_setup
+

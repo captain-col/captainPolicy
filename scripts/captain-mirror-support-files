@@ -12,6 +12,11 @@ fi
 mkdir -p ${CAPTAINPOLICYMIRROR}
 cd  ${CAPTAINPOLICYMIRROR}
 
+if ! touch stamp >> /dev/null ; then
+    echo Group mirror directory is not writable.  Using local copies.
+    exit 1
+fi
+
 # Try using wget
 if which wget ; then
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
