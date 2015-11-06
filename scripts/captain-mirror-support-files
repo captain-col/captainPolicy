@@ -1,0 +1,79 @@
+#! /bin/sh
+
+# Mirror the support files from the central CAPTAIN archive to the local
+# installation.  All of the other packages will use the local mirror to
+# access the support files.
+
+if [ "x${CAPTAINPOLICYMIRROR}" = "x" ] ; then
+    echo captainPolicy package not configured
+    exit 1
+fi
+
+mkdir -p ${CAPTAINPOLICYMIRROR}
+cd  ${CAPTAINPOLICYMIRROR}
+
+# Try using wget
+if which wget ; then
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    echo Trying WGET to mirror input files.
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    if wget -q -N -nH --cut-dirs=1 -r -np ${CAPT_HTTP}/files/ ; then
+	# That was successful, so we are done.
+	echo Input files mirrored
+	exit 0;
+    fi
+else
+    echo WGET not available
+fi
+
+if which rsync ; then
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    echo Trying RSYNC to get input files.
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    if rsync -r captain@nngroup.physics.sunysb.edu:public_html/files/ files ; then
+	echo Input files mirrored
+	exit 0
+    fi
+else
+    echo RSYNC not available
+fi
+
+getCurl () {
+    if expr match ${1} '.*/$' >> /dev/null ; then
+	# Try using curl
+	download=no
+	for file in $(curl -s $1 |
+			     grep href |
+			     sed 's/.*href="//' |
+			     sed 's/".*//' |
+			     grep '^[a-zA-Z].*'); do
+	    getCurl $1${file}
+	    download=yes
+	done
+	if [ ${download} != "yes" ]; then
+	    return 1
+	fi
+	return 0
+    fi
+    file_name=${1#${CAPT_HTTP}/}
+    target_directory=`dirname $file_name`
+    mkdir -p $target_directory
+    curl -s -o ${file_name} ${1}
+}
+
+if which curl ; then
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    echo Trying CURL to get input files.
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    if getCurl ${CAPT_HTTP}/files/ ; then
+	echo Input files mirrored 
+	exit 0
+    fi
+else
+    echo CURL not available.
+fi
+
+echo Files not mirrored: Using local copies if they exist.
+exit 1
+
+
