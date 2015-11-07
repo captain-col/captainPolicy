@@ -9,16 +9,28 @@ if [ "x${CAPTAINPOLICYMIRROR}" = "x" ] ; then
     exit 1
 fi
 
-mkdir -p ${CAPTAINPOLICYMIRROR}
+if [ ! -w ${CAPTAINPOLICYROOT} -o ! -O ${CAPTAINPOLICYROOT} ]; then
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    echo Group installation of captainPolicy.  Not updating.
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    exit 1
+fi
+
+if [ ! -e ${CAPTAINPOLICYMIRROR} ]; then
+    echo "Creating the mirror directory"
+    mkdir -p ${CAPTAINPOLICYMIRROR}
+fi
 cd  ${CAPTAINPOLICYMIRROR}
 
-if ! touch stamp >> /dev/null ; then
-    echo Group mirror directory is not writable.  Using local copies.
+if [ ! -d ${CAPTAINPOLICYMIRROR} -o ! -w ${CAPTAINPOLICYMIRROR} ]; then
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    echo Problem with ${CAPTAINPOLICYMIRROR}
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     exit 1
 fi
 
 # Try using wget
-if which wget ; then
+if which wget >> /dev/null ; then
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     echo Trying WGET to mirror input files.
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,7 +43,7 @@ else
     echo WGET not available
 fi
 
-if which rsync ; then
+if which rsync >> /dev/null ; then
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     echo Trying RSYNC to get input files.
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,7 +78,7 @@ getCurl () {
     curl -s -o ${file_name} ${1}
 }
 
-if which curl ; then
+if which curl >> /dev/null ; then
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     echo Trying CURL to get input files.
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
