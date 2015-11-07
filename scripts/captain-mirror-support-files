@@ -29,6 +29,19 @@ if [ ! -d ${CAPTAINPOLICYMIRROR} -o ! -w ${CAPTAINPOLICYMIRROR} ]; then
     exit 1
 fi
 
+if [ -f mirror-stamp ]; then
+    if find mirror-stamp -mtime +1; then
+	# Check if the stamp has been modified recently.  If it has,
+	# then don't try to mirror the file.
+	echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	echo Not checking recently mirrored files.  Remove mirror-stamp
+	echo or wait until time out is over, about 1 day.
+	echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	exit 0
+    fi
+fi
+date > mirror-stamp
+
 # Try using wget
 if which wget >> /dev/null ; then
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
