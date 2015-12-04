@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # Mirror the support files from the central CAPTAIN archive to the local
 # installation.  All of the other packages will use the local mirror to
@@ -30,7 +30,7 @@ if [ ! -d ${CAPTAINPOLICYMIRROR} -o ! -w ${CAPTAINPOLICYMIRROR} ]; then
 fi
 
 if [ -f mirror-stamp ]; then
-    if find mirror-stamp -mtime +1; then
+    if [ $(find mirror-stamp -mtime -1)x != x ] ; then
 	# Check if the stamp has been modified recently.  If it has,
 	# then don't try to mirror the file.
 	echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
