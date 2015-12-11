@@ -11,7 +11,7 @@ fi
 
 if [ ! -w ${CAPTAINPOLICYROOT} -o ! -O ${CAPTAINPOLICYROOT} ]; then
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    echo Group installation of captainPolicy.  Not updating.
+    echo Using a write protected group mirror, so it is not being updated.
     echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     exit 1
 fi
@@ -34,8 +34,8 @@ if [ -f mirror-stamp ]; then
 	# Check if the stamp has been modified recently.  If it has,
 	# then don't try to mirror the file.
 	echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	echo Not checking recently mirrored files.  Remove mirror-stamp
-	echo or wait until time out is over, about 1 day.
+	echo Files recently mirrored so not checking again.  Remove
+	echo captain-policy/MIRROR/mirror-stamp or wait ~1 day for next check.
 	echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	exit 0
     fi
