@@ -44,4 +44,22 @@ equivalent).
 the layout so that the detailed (and brief) description comes before the
 reset of the class documentation.
 
+
+\section captainPolicy_v1r1p1_history Version 1.1.1
+
+Freeze information:
+   - Freeze Date: Tue Feb 16 18:18:38 2016
+   - Freeze User: mcgrew
+   - Freeze Host: boxer boxer 
+
+
+NEW FEATURES:
+
+* Make default compiler standard c++0x.  Don't use c++11 since GCCs from
+  before 2011 don't know about it, but correctly handle c++0x.
+
+* Add captain-mirror-support-files to check if files should be mirrored
+  from CAPT_HTTP.  It checks a date stamp before downloading files to
+  minimize the network load.
+
 */
