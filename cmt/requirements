@@ -18,6 +18,7 @@ macro cpp             "g++" \
       Darwin	      "g++"
 
 macro cpplinkflags    "" \		
+      Linux	      " -Xlinker --no-as-needed "
       Darwin          " -bind_at_load"
 
 #############################################################
