@@ -63,18 +63,6 @@ else
     echo WGET not available
 fi
 
-if which rsync >> /dev/null ; then
-    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    echo Trying RSYNC to get input files.
-    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    if rsync -r captain@nngroup.physics.sunysb.edu:public_html/files/ files ; then
-	echo Input files mirrored
-	exit 0
-    fi
-else
-    echo RSYNC not available
-fi
-
 getCurl () {
     if expr match ${1} '.*/$' >> /dev/null ; then
 	# Try using curl
@@ -108,6 +96,18 @@ if which curl >> /dev/null ; then
     fi
 else
     echo CURL not available.
+fi
+
+if which rsync >> /dev/null ; then
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    echo Trying RSYNC to get input files.  (requires an ssh key)
+    echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    if rsync -r captain@nngroup.physics.sunysb.edu:public_html/files/ files ; then
+	echo Input files mirrored
+	exit 0
+    fi
+else
+    echo RSYNC not available
 fi
 
 echo Files not mirrored: Using local copies if they exist.
